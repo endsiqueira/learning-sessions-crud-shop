@@ -29,7 +29,8 @@ public class ClienteService {
         return clienteRepository.save(cliente);
     }
 
-    public void deleteCliente(Long id) {
+    public boolean deleteCliente(Long id) {
         clienteRepository.deleteById(id);
+        return false;
     }
 }
