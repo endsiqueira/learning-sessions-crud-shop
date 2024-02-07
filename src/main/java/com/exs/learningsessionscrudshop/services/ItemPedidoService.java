@@ -29,7 +29,8 @@ public class ItemPedidoService {
         return itemPedidoRepository.save(itemPedido);
     }
 
-    public void deleteItemPedido(Long id) {
+    public boolean deleteItemPedido(Long id) {
         itemPedidoRepository.deleteById(id);
+        return false;
     }
 }
