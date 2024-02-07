@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.exs-learning-sessions</groupId>
 	<artifactId>learning-sessions-crud-shop</artifactId>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<name>learning-sessions-crud-shop</name>
 	<description>coding sessions</description>
 	<properties>

@@ -3,7 +3,6 @@ package com.exs.learningsessionscrudshop.services;
 import com.exs.learningsessionscrudshop.models.Produto;
 import com.exs.learningsessionscrudshop.repository.ProdutoRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,7 +29,8 @@ public class ProdutoService {
         return produtoRepository.save(produto);
     }
 
-    public void deleteProduto(Long id) {
+    public boolean deleteProduto(Long id) {
         produtoRepository.deleteById(id);
+        return false;
     }
 }

@@ -2,26 +2,35 @@ package com.exs.learningsessionscrudshop.controllers;
 
 import com.exs.learningsessionscrudshop.models.Produto;
 import com.exs.learningsessionscrudshop.services.ProdutoService;
+import com.exs.learningsessionscrudshop.services.RateLimitingService;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/produtos")
+@RequiredArgsConstructor
 public class ProdutoController {
 
     private static final Logger log = LoggerFactory.getLogger(ProdutoController.class);
     private final ProdutoService produtoService;
+    private final RateLimitingService rateLimitingService;
 
-    public ProdutoController(ProdutoService produtoService) {
-        this.produtoService = produtoService;
-    }
+    private static final long CAPACITY = 5;
+    private static final long WINDOW_IN_SECONDS = 60; // 1 minuto
 
     @PostMapping
-    public ResponseEntity<Produto> createProduto(@RequestBody Produto produto) {
+    public ResponseEntity<?> createProduto(@RequestBody Produto produto) {
+        if (!rateLimitingService.allowRequisition("createProduto", CAPACITY, WINDOW_IN_SECONDS)) {
+            return tooManyRequestsResponse();
+        }
         log.info("Criando novo produto: {}", produto.getNome());
         Produto savedProduto = produtoService.saveProduto(produto);
         log.info("Produto criado com sucesso: Produto ID {}", savedProduto.getProdutoId());
@@ -29,7 +38,10 @@ public class ProdutoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Produto>> getAllProdutos() {
+    public ResponseEntity<?> getAllProdutos() {
+        if (!rateLimitingService.allowRequisition("getAllProdutos", CAPACITY, WINDOW_IN_SECONDS)) {
+            return tooManyRequestsResponse();
+        }
         log.info("Listando todos os produtos");
         List<Produto> produtos = produtoService.findAllProdutos();
         log.info("Total de produtos listados: {}", produtos.size());
@@ -37,7 +49,10 @@ public class ProdutoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Produto> getProdutoById(@PathVariable Long id) {
+    public ResponseEntity<?> getProdutoById(@PathVariable Long id) {
+        if (!rateLimitingService.allowRequisition("getProdutoById", CAPACITY, WINDOW_IN_SECONDS)) {
+            return tooManyRequestsResponse();
+        }
         log.info("Buscando produto com ID: {}", id);
         Produto produto = produtoService.findProdutoById(id);
         if (produto != null) {
@@ -49,29 +64,34 @@ public class ProdutoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Produto> updateProduto(@PathVariable Long id, @RequestBody Produto produtoDetails) {
-        log.info("Atualizando produto com ID: {}", id);
-        Produto existingProduto = produtoService.findProdutoById(id);
-        if (existingProduto == null) {
-            log.warn("Produto com ID: {} para atualização não encontrado", id);
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<?> updateProduto(@PathVariable Long id, @RequestBody Produto produtoDetails) {
+        if (!rateLimitingService.allowRequisition("updateProduto", CAPACITY, WINDOW_IN_SECONDS)) {
+            return tooManyRequestsResponse();
         }
-        // Suponha que o método updateProduto faz a atualização das propriedades do produto
+        log.info("Atualizando produto com ID: {}", id);
         Produto updatedProduto = produtoService.updateProduto(produtoDetails);
         log.info("Produto com ID: {} atualizado com sucesso", id);
         return ResponseEntity.ok(updatedProduto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduto(@PathVariable Long id) {
+    public ResponseEntity<?> deleteProduto(@PathVariable Long id) {
+        if (!rateLimitingService.allowRequisition("deleteProduto", CAPACITY, WINDOW_IN_SECONDS)) {
+            return tooManyRequestsResponse();
+        }
         log.info("Excluindo produto com ID: {}", id);
-        Produto produto = produtoService.findProdutoById(id);
-        if (produto != null) {
-            produtoService.deleteProduto(id);
+        boolean deleted = produtoService.deleteProduto(id);
+        if (deleted) {
             log.info("Produto com ID: {} excluído com sucesso", id);
             return ResponseEntity.ok().build();
         }
         log.warn("Produto com ID: {} para exclusão não encontrado", id);
         return ResponseEntity.notFound().build();
+    }
+
+    private ResponseEntity<Map<String, String>> tooManyRequestsResponse() {
+        Map<String, String> responseMessage = new HashMap<>();
+        responseMessage.put("message", "Número de chamadas por minuto excedido, tente novamente em alguns instantes");
+        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body(responseMessage);
     }
 }

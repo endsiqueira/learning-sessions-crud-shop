@@ -3,7 +3,6 @@ package com.exs.learningsessionscrudshop.services;
 import com.exs.learningsessionscrudshop.models.Pedido;
 import com.exs.learningsessionscrudshop.repository.PedidoRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,7 +29,8 @@ public class PedidoService {
         return pedidoRepository.save(pedido);
     }
 
-    public void deletePedido(Long id) {
+    public boolean deletePedido(Long id) {
         pedidoRepository.deleteById(id);
+        return false;
     }
 }
