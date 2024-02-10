@@ -1,5 +1,6 @@
 C:\workspace\learning-sessions-crud-shop\src\main\java\com\exs\learningsessionscrudshop\controllers\ItemPedidoController.java
 C:\workspace\learning-sessions-crud-shop\src\main\java\com\exs\learningsessionscrudshop\repository\ProdutoRepository.java
+C:\workspace\learning-sessions-crud-shop\src\main\java\com\exs\learningsessionscrudshop\services\RateLimitingService.java
 C:\workspace\learning-sessions-crud-shop\src\main\java\com\exs\learningsessionscrudshop\models\Cliente.java
 C:\workspace\learning-sessions-crud-shop\src\main\java\com\exs\learningsessionscrudshop\models\ItemPedido.java
 C:\workspace\learning-sessions-crud-shop\src\main\java\com\exs\learningsessionscrudshop\services\ClienteService.java
@@ -10,8 +11,12 @@ C:\workspace\learning-sessions-crud-shop\src\main\java\com\exs\learningsessionsc
 C:\workspace\learning-sessions-crud-shop\src\main\java\com\exs\learningsessionscrudshop\services\PedidoService.java
 C:\workspace\learning-sessions-crud-shop\src\main\java\com\exs\learningsessionscrudshop\repository\ClienteRepository.java
 C:\workspace\learning-sessions-crud-shop\src\main\java\com\exs\learningsessionscrudshop\services\ProdutoService.java
+C:\workspace\learning-sessions-crud-shop\src\main\java\com\exs\learningsessionscrudshop\controllers\SessaoController.java
 C:\workspace\learning-sessions-crud-shop\src\main\java\com\exs\learningsessionscrudshop\repository\PedidoRepository.java
+C:\workspace\learning-sessions-crud-shop\src\main\java\com\exs\learningsessionscrudshop\services\SessaoService.java
 C:\workspace\learning-sessions-crud-shop\src\main\java\com\exs\learningsessionscrudshop\models\Produto.java
 C:\workspace\learning-sessions-crud-shop\src\main\java\com\exs\learningsessionscrudshop\controllers\PedidoController.java
+C:\workspace\learning-sessions-crud-shop\src\main\java\com\exs\learningsessionscrudshop\configuration\SessionConfig.java
+C:\workspace\learning-sessions-crud-shop\src\main\java\com\exs\learningsessionscrudshop\health\AppHealthIndicator.java
 C:\workspace\learning-sessions-crud-shop\src\main\java\com\exs\learningsessionscrudshop\controllers\ClienteController.java
 C:\workspace\learning-sessions-crud-shop\src\main\java\com\exs\learningsessionscrudshop\services\ItemPedidoService.java
