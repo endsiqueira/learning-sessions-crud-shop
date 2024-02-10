@@ -23,6 +23,8 @@ public class Cliente {
     private String email;
     private String telefone;
     private String endereco;
+    @Column(name = "user_id")
+    private Long userId;
 
     @JsonIgnore
     @OneToMany(mappedBy = "cliente")
