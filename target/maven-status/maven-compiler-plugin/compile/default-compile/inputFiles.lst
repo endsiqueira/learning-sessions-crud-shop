@@ -19,4 +19,5 @@ C:\workspace\learning-sessions-crud-shop\src\main\java\com\exs\learningsessionsc
 C:\workspace\learning-sessions-crud-shop\src\main\java\com\exs\learningsessionscrudshop\configuration\SessionConfig.java
 C:\workspace\learning-sessions-crud-shop\src\main\java\com\exs\learningsessionscrudshop\health\AppHealthIndicator.java
 C:\workspace\learning-sessions-crud-shop\src\main\java\com\exs\learningsessionscrudshop\controllers\ClienteController.java
+C:\workspace\learning-sessions-crud-shop\src\main\java\com\exs\learningsessionscrudshop\configuration\SecurityConfig.java
 C:\workspace\learning-sessions-crud-shop\src\main\java\com\exs\learningsessionscrudshop\services\ItemPedidoService.java
